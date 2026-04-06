@@ -1,0 +1,59 @@
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using QuanLy.Application.InterfaceService;
+using QuanLy.Domain.Interface;
+using QuanLy.Domain.Models;
+using QuanLy.Infrastructure.Context;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLy.Application.Services
+{
+    public class LoginService : BaseMasterService, ILoginService
+    {
+
+        private readonly IMapper _mapper;
+        private readonly IQuanLyRepositoryWrapper _quanLyRepo;
+        private readonly DASContext _quanLy;
+        private readonly IConfiguration _config;
+
+        public LoginService(IQuanLyRepositoryWrapper quanLyRepo, IMapper mapper, DASContext quanLy,  IConfiguration configuration) : base(quanLyRepo)
+        {
+            _mapper = mapper;
+            _quanLy = quanLy;
+            _config = configuration;
+
+        }
+        public string GenerateToken(Auth_Users acount)
+        {
+            var JwtTokenHadler = new JwtSecurityTokenHandler();
+            var secretKey = _config["AppSettings:SecretKey"];
+            var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey ?? string.Empty);
+
+            var TokenDescription = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, acount.FullName),
+                    new Claim(ClaimTypes.Email, acount.Email ?? string.Empty),
+                    new Claim("UsereName", acount.UsereName),
+                    new Claim("Id", acount.ID.ToString()),  
+
+                    //Roles
+
+                    new Claim("TokenId", Guid.NewGuid().ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var toKen = JwtTokenHadler.CreateToken(TokenDescription ?? new SecurityTokenDescriptor());
+            return JwtTokenHadler.WriteToken(toKen);
+        }
+    }
+}

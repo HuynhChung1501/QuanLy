@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using QuanLy.Domain.Models;
+
+namespace QuanLy.Domain.Interface
+{
+    public interface IAuth_Assign_RoleRepository : IBaseRepository<Auth_Assign_role>
+    {
+    }
+}
