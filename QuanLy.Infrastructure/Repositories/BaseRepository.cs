@@ -23,22 +23,22 @@ namespace QuanLy.Infrastructure.Repositories
 
         public async Task<IEnumerable<T>> GetAllListAsync()
         {
-            return await Context.Set<T>().AsNoTracking().ToListAsync();
+            return await Context.Set<T>().ToListAsync();
         }
 
         public IEnumerable<T> GetAllList(Expression<Func<T, bool>> expression)
         {
-            return Context.Set<T>().AsNoTracking().Where(expression).ToList();
+            return Context.Set<T>().Where(expression).ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllListAsync(Expression<Func<T, bool>> expression)
         {
-            return await Context.Set<T>().AsNoTracking().Where(expression).ToListAsync();
+            return await Context.Set<T>().Where(expression).ToListAsync();
         }
 
         public IQueryable<T> GetAll()
         {
-            return Context.Set<T>().AsNoTracking();
+            return Context.Set<T>();
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null)
@@ -129,6 +129,18 @@ namespace QuanLy.Infrastructure.Repositories
             await Context.Set<T>().AddRangeAsync(entities);
         }
         #endregion Insert
+
+        #region SaveChange
+        public async Task SaveChangesAsync()
+        {
+            await Context.SaveChangesAsync();
+        }
+        public void SaveChanges()
+        {
+            Context.SaveChanges();
+        }
+
+        #endregion
 
         #region Update
 

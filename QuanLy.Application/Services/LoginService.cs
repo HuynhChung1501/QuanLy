@@ -20,14 +20,13 @@ namespace QuanLy.Application.Services
 
         private readonly IMapper _mapper;
         private readonly IQuanLyRepositoryWrapper _quanLyRepo;
-        private readonly DASContext _quanLy;
         private readonly IConfiguration _config;
 
-        public LoginService(IQuanLyRepositoryWrapper quanLyRepo, IMapper mapper, DASContext quanLy,  IConfiguration configuration) : base(quanLyRepo)
+        public LoginService(IQuanLyRepositoryWrapper quanLyRepo, IMapper mapper,  IConfiguration configuration) : base(quanLyRepo)
         {
             _mapper = mapper;
-            _quanLy = quanLy;
             _config = configuration;
+            _quanLyRepo = quanLyRepo;
 
         }
         public string GenerateToken(Auth_Users acount)
@@ -42,7 +41,7 @@ namespace QuanLy.Application.Services
                     new Claim(ClaimTypes.Name, acount.FullName),
                     new Claim(ClaimTypes.Email, acount.Email ?? string.Empty),
                     new Claim("UsereName", acount.UsereName),
-                    new Claim("Id", acount.ID.ToString()),  
+                    new Claim("UserID", acount.UserID.ToString()),  
 
                     //Roles
 

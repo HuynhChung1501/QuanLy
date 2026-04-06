@@ -63,6 +63,11 @@ namespace QuanLy.Domain.Interface
         Task UpdateAsync(IEnumerable<T> entities);
         #endregion Update
 
+        #region SaveChange
+        Task SaveChangesAsync();
+        void SaveChanges();
+        #endregion
+
         #region Delete
 
         void Delete(T entity);

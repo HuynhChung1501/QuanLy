@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using QuanLy.Domain.Models;
 
 namespace QuanLy.Domain.Models
 {
     [Table("Auth_Users")]
-    public class Auth_Users : BaseModel
+    public class Auth_Users 
     {
+        [Key]
+        [Required]
+        [Description("Khóa chính")]
+        public int UserID { get; set; }
         [Required]
         [MaxLength(250)]
         public required string Name { get; set; } = string.Empty;
@@ -30,5 +29,10 @@ namespace QuanLy.Domain.Models
         public byte IsShow { get; set; }
         public byte Gender { get; set; }
         public byte Active { get; set; }
+        
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public int? UpdatedBy { get; set; }
     }
 }
