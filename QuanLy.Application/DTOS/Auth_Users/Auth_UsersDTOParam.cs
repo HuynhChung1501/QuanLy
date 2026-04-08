@@ -16,5 +16,9 @@ namespace QuanLy.Application.DTO.Auth_Assign
         public byte IsShow { get; set; }
         public byte Gender { get; set; }
         public byte Active { get; set; }
+        public int PageIndex { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+        public int TotalRecords { get; set; }
+        public int TotalPages { get; set; }
     }
 }

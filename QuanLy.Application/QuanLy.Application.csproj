@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutoMapper\" />
     <Folder Include="Enums\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>

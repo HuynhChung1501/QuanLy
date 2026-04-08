@@ -109,9 +109,19 @@ namespace QuanLy.Infrastructure.Repositories
             return GetAll().FirstOrDefault(predicate);
         }
 
+        public T FirstOrDefaultNoTracking(Expression<Func<T, bool>> predicate)
+        {
+            return GetAll().AsNoTracking().FirstOrDefault(predicate);
+        }
+
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
             return await GetAll().FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<T> FirstOrDefaultNoTrackingAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await GetAll().AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
         #endregion Getting single entity

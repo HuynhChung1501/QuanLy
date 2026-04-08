@@ -17,11 +17,15 @@ builder.Services.AddDbContext<DASContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("QuanLyConnection"));
 });
 
-// Đăng ký Repository
+#region Đăng ký Repository
 builder.Services.AddScoped<IQuanLyRepositoryWrapper, QuanLyRepositoryWrapper>();
+#endregion
 
-// Đăng ký Service
+
+#region Đăng ký Service
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IAuth_UsersService, Auth_UsersService>();
+#endregion
 
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
@@ -39,7 +43,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // JWT
 var secretKey = builder.Configuration["AppSettings:SecretKey"];
-var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
+var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey ?? "");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
@@ -48,7 +52,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateIssuerSigningKey = true,
+            ValidateIssuerSigningKey = false,
             IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
             ClockSkew = TimeSpan.Zero
         };

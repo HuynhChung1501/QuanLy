@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLy.Application.DTO.Auth_Assign
+namespace QuanLy.Common.Helper
 {
-    public class Auth_UsersDTOIndex : PagedResult<Auth_UsersDTO>
+    public class Utls
     {
+        
     }
 }

@@ -43,8 +43,10 @@ namespace QuanLy.Domain.Interface
         Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate);
 
         T FirstOrDefault(Expression<Func<T, bool>> predicate);
+        T FirstOrDefaultNoTracking(Expression<Func<T, bool>> predicate);
 
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+        Task<T> FirstOrDefaultNoTrackingAsync(Expression<Func<T, bool>> predicate);
 
         #endregion Getting single entity
 

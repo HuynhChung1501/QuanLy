@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QuanLy.Application.DTO;
 using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Application.Enums;
 using QuanLy.Application.Helpers;
@@ -18,50 +21,60 @@ namespace QuanLy.Application.Services
             _QLContext = QuanLyRepository;
         }
 
+
         public async Task<Auth_UsersDTODetail> GetID(int id)
         {
-            var model = new Auth_UsersDTODetail();
-            var auth_Users = await _QLContext.Auth_UsersRepository.FirstOrDefaultAsync(x => x.UserID == id && x.Active == (int)EnumCommon.Status.Active);
-            if (auth_Users != null)
+            var auth_Users = await _QLContext.Auth_UsersRepository.FirstOrDefaultNoTrackingAsync(x => x.UserID == id && x.Active == (int)EnumCommon.Status.Active);
+            if (auth_Users == null)
             {
-                model = _mapper.Map<Auth_UsersDTODetail>(auth_Users);
+                throw new AppException("Không tìm thấy dữ liệu phù hợp.");
             }
-            else throw new AppException("Không tìm thấy dữ liệu phù hợp.");
-            return model;
+            return _mapper.Map<Auth_UsersDTODetail>(auth_Users);
         }
         public async Task<Auth_UsersDTO> Create(Auth_UsersDTOCreate model)
         {
             try
             {
-                if (await _QLContext.Auth_UsersRepository.AnyAsync(a => a.UsereName == model.UsereName))
+                model.UsereName = model.UsereName?.Trim().ToLower() ?? string.Empty;
+
+                if (await _QLContext.Auth_UsersRepository
+                    .AnyAsync(a => a.UsereName.ToLower() == model.UsereName))
                 {
                     throw new AppException($"UserName: {model.UsereName} đã tồn tại");
                 }
-                Auth_Users auth_Users = _mapper.Map<Auth_Users>(model);
+
+                var auth_Users = _mapper.Map<Auth_Users>(model);
+
+                auth_Users.Active = (int)EnumCommon.Status.Active;
+                auth_Users.CreatedDate = DateTime.UtcNow;
 
                 await _QLContext.Auth_UsersRepository.InsertAsync(auth_Users);
                 await _QLContext.Auth_UsersRepository.SaveChangesAsync();
 
-                return _mapper.Map<Auth_UsersDTO>(model);
-                throw new AppException($"Tạo mới thành công");
+                return _mapper.Map<Auth_UsersDTO>(auth_Users);
             }
             catch (Exception ex)
             {
-                throw new AppException(ex.Message);
+
+                throw new AppException($"Có lỗi xảy ra khi tạo mới use", ex.Message);
             }
         }
 
-        public async Task<string> Delete(int id)
+        public async Task<(bool, string)> Delete(int id)
         {
             try
             {
-                var model = await _QLContext.Auth_UsersRepository.FirstOrDefaultAsync(a => a.UserID == id && a.Active == (int)EnumCommon.Status.Active);
+                var model = await _QLContext.Auth_UsersRepository
+                                    .FirstOrDefaultAsync(a => a.UserID == id && a.Active == (int)EnumCommon.Status.Active);
 
-                if (model == null) throw new AppException("Không tìm thấy dữ liệu phù hợp.");
+                if (model == null)
+                    return (false, "Không tìm thấy dữ liệu phù hơp");
 
-                await _QLContext.Auth_UsersRepository.DeleteAsync(model);
+                model.Active = (int)EnumCommon.Status.InActive;
+
                 await _QLContext.Auth_UsersRepository.SaveChangesAsync();
-                throw new AppException($"Xóa thành công");
+
+                return (false, "Xóa thành công");
             }
             catch (Exception ex)
             {
@@ -73,52 +86,66 @@ namespace QuanLy.Application.Services
         {
             try
             {
-                var auth_Users = await _QLContext.Auth_UsersRepository.FirstOrDefaultAsync(a => a.UserID == model.UserID);
+                var auth_Users = await _QLContext.Auth_UsersRepository.FirstOrDefaultAsync(a => a.UserID == model.UserID && a.Active == (int)EnumCommon.Status.Active);
 
                 if (auth_Users == null) throw new AppException("Không tìm thấy dữ liệu phù hợp");
 
-                auth_Users = _mapper.Map<Auth_Users>(auth_Users);
-
-                await _QLContext.Auth_UsersRepository.UpdateAsync(auth_Users);
+                _mapper.Map(model, auth_Users);
                 await _QLContext.Auth_UsersRepository.SaveChangesAsync();
 
                 return _mapper.Map<Auth_UsersDTO>(auth_Users);
             }
             catch (Exception ex)
             {
-                throw new AppException(ex.Message);
+                throw new AppException("Có lỗi xả ra khi cập nhật user", ex.Message);
             }
         }
 
+        public async Task<PagedResult<Auth_UsersDTO>> SearchPagination(Auth_UsersDTOParam searchParam)
+        {
+            var query = _QLContext.Auth_UsersRepository
+                .GetAll()
+                .AsNoTracking()
+                .Where(a => a.Active == (int)EnumCommon.Status.Active);
+
+            if (!string.IsNullOrEmpty(searchParam.UsereName))
+            {
+                query = query.Where(a => a.UsereName.Contains(searchParam.UsereName));
+            } 
+
+            if (!string.IsNullOrEmpty(searchParam.Phone))
+            {
+                query = query.Where(a => (a.Phone ?? "").Contains(searchParam.Phone));
+            }
+
+            return await query
+                .ProjectTo<Auth_UsersDTO>(_mapper.ConfigurationProvider)
+                .ToPagedResultAsync(searchParam.PageIndex, searchParam.PageSize);
+        }
 
         #region Tìm kiếm theo userName và số điện thoại
-        public async Task<Auth_UsersDTOIndex> Search(Auth_UsersDTOParam searchParam)
+        public async Task<List<Auth_UsersDTO>> Search(Auth_UsersDTOParam searchParam)
         {
-            try
-            {
-                var result = new Auth_UsersDTOIndex();
-                var accounts = await (from a in _QLContext.Auth_UsersRepository.GetAll()
-                                      where (!string.IsNullOrEmpty(searchParam.UsereName) ? a.UsereName.Contains(searchParam.UsereName) : true)
-                                      && (string.IsNullOrEmpty(searchParam.Phone) || (a.Phone ?? "").Contains(searchParam.Phone))
-                                      && (a.Active == (int)EnumCommon.Status.Active)
-                                      select a).ToListAsync();
-                var accountResult = new List<Auth_UsersDTO>();
-                foreach (var item in accounts)
-                {
-                    accountResult.Add(_mapper.Map<Auth_UsersDTO>(item));
-                }
-                result.Positions = accountResult;
-                if (accounts.Count == 0 || !accounts.Any())
-                {
-                    throw new KeyNotFoundException("Không tìm thấy dữ liệu phù hợp");
-                }
+            var query = _QLContext.Auth_UsersRepository
+                .GetAll()
+                .AsNoTracking()
+                .Where(a => a.Active == (int)EnumCommon.Status.Active);
 
-                return result;
-            }
-            catch (Exception ex)
+            if (!string.IsNullOrEmpty(searchParam.UsereName))
             {
-                throw new AppException(ex.Message);
+                query = query.Where(a => a.UsereName.ToLower().Contains(searchParam.UsereName.ToLower()));
             }
+
+            if (!string.IsNullOrEmpty(searchParam.Phone))
+            {
+                query = query.Where(a => (a.Phone ?? "").Contains(searchParam.Phone));
+            }
+
+            var data = await query
+                .ProjectTo<Auth_UsersDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return data;
         }
         #endregion
     }
