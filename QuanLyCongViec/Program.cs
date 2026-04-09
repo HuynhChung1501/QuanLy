@@ -9,6 +9,7 @@ using QuanLy.Domain.Interface;
 using QuanLy.Infrastructure.Context;
 using QuanLy.Infrastructure.Repositories;
 using System.Text;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,7 +45,13 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // JWT
 var secretKey = builder.Configuration["AppSettings:SecretKey"];
 var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey ?? "");
-
+// 🔥 đọc config từ appsettings.json
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+// 🔥 thay thế logging mặc định
+builder.Host.UseSerilog();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
@@ -72,7 +79,7 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSerilogRequestLogging(); // 🔥 log toàn bộ request
 app.MapControllers();
 
 app.Run();

@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using QuanLy.Application.DTO;
 using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Application.Enums;
@@ -9,16 +10,20 @@ using QuanLy.Application.Helpers;
 using QuanLy.Application.InterfaceService;
 using QuanLy.Domain.Interface;
 using QuanLy.Domain.Models;
+using Serilog.Core;
 namespace QuanLy.Application.Services
 {
     public class Auth_UsersService : BaseMasterService, IAuth_UsersService
     {
         private readonly IMapper _mapper;
         private readonly IQuanLyRepositoryWrapper _QLContext;
-        public Auth_UsersService(IQuanLyRepositoryWrapper QuanLyRepository, IMapper mapper, IQuanLyRepositoryWrapper QlContext) : base(QuanLyRepository)
+        private readonly ILogger<Auth_UsersService> _logger;
+
+        public Auth_UsersService(IQuanLyRepositoryWrapper QuanLyRepository, IMapper mapper, ILogger<Auth_UsersService> logger, IQuanLyRepositoryWrapper QlContext) : base(QuanLyRepository)
         {
             _mapper = mapper;
             _QLContext = QuanLyRepository;
+            _logger = logger;
         }
 
 
@@ -55,7 +60,6 @@ namespace QuanLy.Application.Services
             }
             catch (Exception ex)
             {
-
                 throw new AppException($"Có lỗi xảy ra khi tạo mới use", ex.Message);
             }
         }
@@ -66,7 +70,7 @@ namespace QuanLy.Application.Services
             {
                 var model = await _QLContext.Auth_UsersRepository
                                     .FirstOrDefaultAsync(a => a.UserID == id && a.Active == (int)EnumCommon.Status.Active);
-
+                 
                 if (model == null)
                     return (false, "Không tìm thấy dữ liệu phù hơp");
 
@@ -78,6 +82,7 @@ namespace QuanLy.Application.Services
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error deleting user {UserId}", id);
                 throw new AppException(ex.Message);
             }
         }

@@ -12,11 +12,13 @@ namespace QuanLyCongViec.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly ILogger<AccountController> _logger;
         private readonly IAuth_UsersService _iAuth_UsersService;
 
-        public AccountController(IAuth_UsersService iAuth_UsersService)
+        public AccountController(IAuth_UsersService iAuth_UsersService, ILogger<AccountController> logger)
         {
             _iAuth_UsersService = iAuth_UsersService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -75,13 +77,25 @@ namespace QuanLyCongViec.Controllers
         [Route("Update")]
         public async Task<IActionResult> Update(Auth_UsersDTOUpdate model)
         {
-            var user = await _iAuth_UsersService.Edit(model);
-
-            return Ok(new ApiResponse
+            try
             {
-                Message = $"Cập nhật user: {model.UsereName} thành công!",
-                Data = user
-            });
+                
+                var user = await _iAuth_UsersService.Edit(model);
+
+                return Ok(new ApiResponse
+                {
+                    Message = $"Cập nhật user: {model.UsereName} thành công!",
+                    Data = user
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{GetType()} ex => {ex.Message} ", model);
+                return StatusCode(500, new ApiResponse
+                {
+                    Message = "Có lỗi xảy ra"
+                });
+            }
         }
 
         [HttpDelete]
@@ -100,9 +114,10 @@ namespace QuanLyCongViec.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new ApiResponse
+                _logger.LogError(ex, "Exception when deleting user {UserId}", id);
+                return StatusCode(500, new ApiResponse
                 {
-                    Message = ex.Message
+                    Message = "Có lỗi xảy ra"
                 });
             }
         }
