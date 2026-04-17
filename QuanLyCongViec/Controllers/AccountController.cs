@@ -35,7 +35,7 @@ namespace QuanLyCongViec.Controllers
         }
 
         [HttpPost]
-        [Route("GetListPagination")]
+        [Route("SearchPagination")]
         public async Task<IActionResult> SearchPagination(Auth_UsersDTOParam searchParam)
         {
             var user = await _iAuth_UsersService.Search(searchParam);

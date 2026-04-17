@@ -11,13 +11,13 @@ namespace QuanLy.Application.DTO.Auth_Assign
     {
         public int UserID { get; set; }
         [Required(ErrorMessage = "Trường Name không được để trống")]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Required(ErrorMessage = "Trường UserName không được để trống")]
-        public string UsereName { get; set; }
+        public required string UsereName { get; set; }
         [Required(ErrorMessage = "Trường full name không được để trống")]
-        public string FullName { get; set; }
+        public required string FullName { get; set; }
         [Required(ErrorMessage = "Mật khẩu không được để trống")]
-        public string PassWord { get; set; }
+        public required string PassWord { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public int DepartmentId { get; set; }
