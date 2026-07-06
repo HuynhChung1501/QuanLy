@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using QuanLy.Infrastructure.Context;
@@ -11,9 +12,11 @@ using QuanLy.Infrastructure.Context;
 namespace QuanLy.Infrastructure.Migrations
 {
     [DbContext(typeof(DASContext))]
-    partial class DASContextModelSnapshot : ModelSnapshot
+    [Migration("20260706090817_RefreshToken")]
+    partial class RefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

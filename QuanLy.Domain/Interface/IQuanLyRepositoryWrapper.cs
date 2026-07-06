@@ -15,5 +15,6 @@ namespace QuanLy.Domain.Interface
         IAuth_RolesRepository Auth_RolesRepository { get; }
         IAuth_UserRolesRepository Auth_UserRolesRepository { get; }
         IAuth_UsersRepository Auth_UsersRepository { get; }
+        IRefreshTokenRepository RefreshTokenRepository { get; }
     }
 }

@@ -26,6 +26,7 @@ builder.Services.AddScoped<IQuanLyRepositoryWrapper, QuanLyRepositoryWrapper>();
 #region Đăng ký Service
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IAuth_UsersService, Auth_UsersService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 #endregion
 
 builder.Services.AddControllers();
@@ -59,7 +60,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateIssuerSigningKey = false,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
             ClockSkew = TimeSpan.Zero
         };

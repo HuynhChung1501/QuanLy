@@ -1,4 +1,5 @@
-﻿using QuanLy.Application.DTO.Auth_Assign;
+﻿using QuanLy.Application.DTO;
+using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,8 @@ using System.Threading.Tasks;
 
 namespace QuanLy.Application.InterfaceService
 {
-    public interface ILoginService
+    public interface ITokenService
     {
-        LoginResponse GenerateTokens(Auth_Users acount);
-        string GenerateRefreshToken();
-        string HashRefreshToken(string refreshToken);
+        bool InsertToken(int id, string token);
     }
 }
