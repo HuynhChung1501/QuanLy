@@ -26,26 +26,55 @@ namespace QuanLy.Application.Services
             _logger = logger;
         }
 
-        public bool InsertToken(int id, string token)
+        public async Task<bool> InsertToken(int userId, string token)
         {
             try
             {
                 var refreshToken = new RefreshToken
                 {
-                    UserId = id,
+                    UserId = userId,
                     TokenHash = token,
                     ExpireAt = DateTime.UtcNow.AddDays(30),
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
                 };
 
-                _QLContext.RefreshTokenRepository.InsertAsync(refreshToken);
-                _QLContext.RefreshTokenRepository.SaveChangesAsync();
+                await _QLContext.RefreshTokenRepository.InsertAsync(refreshToken);
+                await _QLContext.RefreshTokenRepository.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error inserting refresh token");
+                _logger.LogError(ex, $"Error inserting refresh token {ex.InnerException?.Message}");
                 return false;
+            }
+        }
+        public async Task<bool> RevokedToken (RefreshToken refreshToken)
+        {
+            try
+            {
+                refreshToken.ExpireAt = DateTime.UtcNow;
+                await _QLContext.RefreshTokenRepository.UpdateAsync(refreshToken);
+                await _QLContext.RefreshTokenRepository.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error RevokedToken {ex.InnerException?.Message}");
+                return false;
+            }
+        }
+
+        public RefreshToken? GetRefreshTokenByToken(string hashToken)
+        {
+            try
+            {
+                var token = _QLContext.RefreshTokenRepository.FirstOrDefault(t => t.TokenHash == hashToken);
+                return token;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error checking refresh token existence");
+                return null;
             }
         }
     }

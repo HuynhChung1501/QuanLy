@@ -104,6 +104,19 @@ namespace QuanLy.Infrastructure.Repositories
             }
         }
 
+        private IRefreshTokenRepository _iRefreshTokenRepository;
+        public IRefreshTokenRepository RefreshTokenRepository
+        {
+            get
+            {
+                if (_iRefreshTokenRepository == null)
+                {
+                    _iRefreshTokenRepository = new RefreshTokenRepository(_repoContext);
+                }
+                return _iRefreshTokenRepository;
+            }
+        }
+
 
     }
 }

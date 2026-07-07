@@ -12,6 +12,13 @@ namespace QuanLy.Application.InterfaceService
 {
     public interface ITokenService
     {
-        bool InsertToken(int id, string token);
+        Task<bool> InsertToken(int userId, string token);
+        /// <summary>
+        /// Thu hồi Token
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <returns></returns>
+        Task<bool> RevokedToken(RefreshToken refreshToken);
+        RefreshToken? GetRefreshTokenByToken(string hashToken);
     }
 }

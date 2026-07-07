@@ -33,12 +33,6 @@ namespace QuanLy.Infrastructure.Migrations
                 }
             );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RefreshToken_UserId",
-                table: "RefreshToken",
-                column: "UserId",
-                unique: true);
-
             migrationBuilder.AddUniqueConstraint(
             name: "AK_RefreshToken_TokenHash",
             table: "RefreshToken",

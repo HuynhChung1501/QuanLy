@@ -9,8 +9,14 @@ namespace QuanLy.Application.DTO.Auth_Assign
 {
     public class LoginResponse
     {
+        [Required]
         public required string AccessToken { get; set; }
-
+        [Required]
+        public required string RefreshToken { get; set; }
+    }
+    public class RefreshTokenRequest
+    {
+        [Required]
         public required string RefreshToken { get; set; }
     }
 }

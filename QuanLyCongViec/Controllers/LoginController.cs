@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Application.InterfaceService;
 using QuanLy.Domain.Interface;
 using QuanLy.Domain.Models;
 using QuanLy.Infrastructure.Context;
 using System.Net.WebSockets;
+using System.Text;
 
 namespace QuanLyCongViec.Controllers
 {
@@ -44,13 +46,14 @@ namespace QuanLyCongViec.Controllers
             else
             {
                 var token = _loginService.GenerateTokens(user);
-                token.RefreshToken = _loginService.HashRefreshToken(token.RefreshToken);
-                bool isInserted = _tokenService.InsertToken(user.UserID, token.RefreshToken);
-                if (!isInserted) {
+                var hashToken = _loginService.HashRefreshToken(token.RefreshToken);
+                bool isInserted = await _tokenService.InsertToken(user.UserID, hashToken);
+                if (!isInserted)
+                {
                     return Ok(new ApiResponse
                     {
                         Message = "Đăng nhập không thành công do không lưu được Token!",
-                        Data = token
+                        Success = false,
                     });
                 }
                 return Ok(new ApiResponse
@@ -59,6 +62,13 @@ namespace QuanLyCongViec.Controllers
                     Data = token
                 });
             }
+        }
+        [HttpPost]
+        [Route("RefreshToken")]
+        public async Task<IActionResult> RefreshToken(RefreshTokenRequest RefreshToken)
+        {
+            var response = await _loginService.RefreshToken(RefreshToken);
+            return Ok(response);
         }
     }
 }

@@ -14,5 +14,6 @@ namespace QuanLy.Application.InterfaceService
         LoginResponse GenerateTokens(Auth_Users acount);
         string GenerateRefreshToken();
         string HashRefreshToken(string refreshToken);
+        Task<ApiResponse> RefreshToken(RefreshTokenRequest RefreshToken);
     }
 }
