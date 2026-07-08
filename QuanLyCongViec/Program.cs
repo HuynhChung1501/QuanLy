@@ -8,8 +8,9 @@ using QuanLy.Application.Services;
 using QuanLy.Domain.Interface;
 using QuanLy.Infrastructure.Context;
 using QuanLy.Infrastructure.Repositories;
-using System.Text;
+using QuanLyCongViec.Extensions;
 using Serilog;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,15 +19,8 @@ builder.Services.AddDbContext<DASContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("QuanLyConnection"));
 });
 
-#region Đăng ký Repository
-builder.Services.AddScoped<IQuanLyRepositoryWrapper, QuanLyRepositoryWrapper>();
-#endregion
-
-
 #region Đăng ký Service
-builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddScoped<IAuth_UsersService, Auth_UsersService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddApplicationServices();
 #endregion
 
 builder.Services.AddControllers();
@@ -60,6 +54,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuer = false,
             ValidateAudience = false,
+            ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
             ClockSkew = TimeSpan.Zero
@@ -81,6 +76,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSerilogRequestLogging(); // 🔥 log toàn bộ request
+
 app.MapControllers();
 
 app.Run();

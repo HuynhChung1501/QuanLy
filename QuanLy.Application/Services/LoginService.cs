@@ -54,7 +54,7 @@ namespace QuanLy.Application.Services
 
                     new Claim("TokenId", Guid.NewGuid().ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
             };
 

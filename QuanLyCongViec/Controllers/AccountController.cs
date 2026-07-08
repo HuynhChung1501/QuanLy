@@ -8,6 +8,7 @@ using QuanLy.Domain.Models;
 
 namespace QuanLyCongViec.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -21,7 +22,9 @@ namespace QuanLyCongViec.Controllers
             _logger = logger;
         }
 
+        
         [HttpPost]
+        [AllowAnonymous]
         [Route("GetList")]
         public async Task<IActionResult> GetList(Auth_UsersDTOParam searchParam)
         {
