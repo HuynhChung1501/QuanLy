@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Application.InterfaceService;
 using QuanLy.Domain.Interface;
@@ -24,6 +25,7 @@ namespace QuanLyCongViec.Controllers
 
         
         [HttpPost]
+        [EnableRateLimiting("ApiPolicy")]
         [AllowAnonymous]
         [Route("GetList")]
         public async Task<IActionResult> GetList(Auth_UsersDTOParam searchParam)

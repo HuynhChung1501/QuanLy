@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuanLy.Application.Helpers;
-using QuanLy.Application.InterfaceService;
-using QuanLy.Application.Services;
-using QuanLy.Domain.Interface;
 using QuanLy.Infrastructure.Context;
-using QuanLy.Infrastructure.Repositories;
 using QuanLyCongViec.Extensions;
 using Serilog;
 using System.Text;
+using System.Threading.RateLimiting;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +59,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddFixedWindowLimiter("ApiPolicy", opt =>
+    {
+        opt.PermitLimit = 100;                  // tối đa 100 request
+        opt.Window = TimeSpan.FromMinutes(1);   // trong 1 phút
+
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 0;
+    });
+});
 
 var app = builder.Build();
 
@@ -73,6 +85,7 @@ app.UseSwaggerUI(options =>
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseHttpsRedirection();
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSerilogRequestLogging(); // 🔥 log toàn bộ request

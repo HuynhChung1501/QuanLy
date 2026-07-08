@@ -54,7 +54,7 @@ namespace QuanLy.Application.Services
 
                     new Claim("TokenId", Guid.NewGuid().ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(15),
+                Expires = DateTime.UtcNow.AddMinutes(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -77,7 +77,7 @@ namespace QuanLy.Application.Services
 
             return Convert.ToBase64String(randomNumber);
         }
-        public string HashRefreshToken(string refreshToken)
+        public string HashToken(string refreshToken)
         {
             using (var sha = SHA256.Create())
             {
@@ -93,26 +93,25 @@ namespace QuanLy.Application.Services
             ApiResponse apiResponse = new ApiResponse();
             try
             {
-                var hashToken = HashRefreshToken(RefreshToken.RefreshToken);
+                var hashToken = HashToken(RefreshToken.RefreshToken);
 
-                var resfreshToken = _tokenService.GetRefreshTokenByToken(hashToken) ?? throw new AppException("Resfresh Token không thành công.");
+                var resfreshToken = _tokenService.GetRefreshTokenByToken(hashToken) ?? throw new AppException("Resfresh Token không tồn tại.");
                 
                 var user = await _quanLyRepo.AuthUser.SingleOrDefaultAsync(u => u.UserID == resfreshToken!.UserId);
 
-                var token = GenerateTokens(user);
+                var NewToken = GenerateTokens(user);
 
-                if (resfreshToken!.ExpireAt <= DateTime.UtcNow)
+                if (resfreshToken!.ExpireAt <= DateTime.UtcNow || resfreshToken.RevokedAt != null)
                 {
-                    throw new AppException("RefreshToken đã hết hạn.");
-                }
-                if (resfreshToken.RevokedAt != null)
-                {
-                    throw new AppException("RefreshToken đã bị thu hồi.");
+                    apiResponse.Success = false;
+                    apiResponse.Message = "RefreshToken đã bị thu hồi";
+                    apiResponse.StatusCode = 401;
+
                 }
 
-                token.RefreshToken = HashRefreshToken(token.RefreshToken);
                 await _tokenService.RevokedToken(resfreshToken);
-                bool isInserted = await _tokenService.InsertToken(resfreshToken!.UserId, token.RefreshToken);
+                // hash lại Token và lưu token mới 
+                bool isInserted = await _tokenService.InsertToken(resfreshToken!.UserId, HashToken(NewToken.RefreshToken)); 
 
                 if (!isInserted)
                 {
@@ -120,12 +119,12 @@ namespace QuanLy.Application.Services
                 }
 
                 apiResponse.Message = "Resfresh thành công!";
-                apiResponse.Data = token;
+                apiResponse.Data = NewToken;
                 return apiResponse;
             }
             catch (Exception ex)
             {
-                throw new AppException($"Có lỗi xảy ra! - {ex.InnerException?.Message}");
+                throw new AppException($"Có lỗi xảy ra! - {ex.Message}");
             }
         }
     }

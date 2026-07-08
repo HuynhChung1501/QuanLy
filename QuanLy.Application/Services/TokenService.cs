@@ -53,6 +53,7 @@ namespace QuanLy.Application.Services
             try
             {
                 refreshToken.ExpireAt = DateTime.UtcNow;
+                refreshToken.RevokedAt = DateTime.UtcNow;
                 await _QLContext.RefreshTokenRepository.UpdateAsync(refreshToken);
                 await _QLContext.RefreshTokenRepository.SaveChangesAsync();
                 return true;

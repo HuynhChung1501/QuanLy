@@ -46,7 +46,7 @@ namespace QuanLyCongViec.Controllers
             else
             {
                 var token = _loginService.GenerateTokens(user);
-                var hashToken = _loginService.HashRefreshToken(token.RefreshToken);
+                var hashToken = _loginService.HashToken(token.RefreshToken);
                 bool isInserted = await _tokenService.InsertToken(user.UserID, hashToken);
                 if (!isInserted)
                 {
