@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Application.Helpers;
@@ -20,14 +22,17 @@ namespace QuanLy.Application.Services
         private readonly IConfiguration _config;
         private readonly ITokenService _tokenService;
         private readonly IQuanLyRepositoryWrapper _quanLyRepo;
+        private readonly ILogger<LoginService> _logger;
 
 
-        public LoginService(IQuanLyRepositoryWrapper quanLyRepo, IMapper mapper, ITokenService tokenService, IQuanLyRepositoryWrapper IQuanLyRepositoryWrapper, IConfiguration configuration) : base(quanLyRepo)
+        public LoginService(IQuanLyRepositoryWrapper quanLyRepo, IMapper mapper, ITokenService tokenService, ILogger<LoginService> logger, IQuanLyRepositoryWrapper IQuanLyRepositoryWrapper, IConfiguration configuration) : base(quanLyRepo)
         {
             _mapper = mapper;
             _config = configuration;
             _tokenService = tokenService;
             _quanLyRepo = IQuanLyRepositoryWrapper;
+            _logger = logger;
+
 
         }
         public LoginResponse GenerateTokens(Auth_Users acount)
@@ -82,44 +87,53 @@ namespace QuanLy.Application.Services
                 return Convert.ToBase64String(hash);
             }
         }
-        public async Task<ApiResponse> RefreshToken(RefreshTokenRequest RefreshToken)
+        public async Task<ApiResponse> RefreshAccessToken(RefreshTokenRequest request)
         {
-            ApiResponse apiResponse = new ApiResponse();
-            try
+            ArgumentNullException.ThrowIfNull(request);
+
+            if (string.IsNullOrWhiteSpace(request.RefreshToken))
             {
-                var hashToken = HashToken(RefreshToken.RefreshToken);
-
-                var resfreshToken = _tokenService.GetRefreshTokenByToken(hashToken) ?? throw new AppException("Resfresh Token không tồn tại.");
-                
-                var user = await _quanLyRepo.AuthUser.SingleOrDefaultAsync(u => u.UserID == resfreshToken!.UserId);
-
-                var NewToken = GenerateTokens(user);
-
-                if (resfreshToken!.ExpireAt <= DateTime.UtcNow || resfreshToken.RevokedAt != null)
-                {
-                    apiResponse.Success = false;
-                    apiResponse.Message = "RefreshToken đã bị thu hồi";
-                    apiResponse.StatusCode = 401;
-
-                }
-
-                await _tokenService.RevokedToken(resfreshToken);
-                // hash lại Token và lưu token mới 
-                bool isInserted = await _tokenService.InsertToken(resfreshToken!.UserId, HashToken(NewToken.RefreshToken)); 
-
-                if (!isInserted)
-                {
-                    throw new AppException("Refresh Token không thành công do không lưu được Token.");
-                }
-
-                apiResponse.Message = "Resfresh thành công!";
-                apiResponse.Data = NewToken;
-                return apiResponse;
+                throw new AppException("Refresh token không được để trống.");
             }
-            catch (Exception ex)
+
+            var hashedRefreshToken = HashToken(request.RefreshToken);
+
+            var refreshToken = await _tokenService.GetRefreshTokenByToken(hashedRefreshToken)
+                ?? throw new AppException("Refresh token không tồn tại.");
+
+            if (refreshToken.ExpireAt <= DateTime.UtcNow)
             {
-                throw new AppException($"Có lỗi xảy ra! - {ex.Message}");
+                throw new AppException("Refresh token đã hết hạn.");
             }
+
+            if (refreshToken.RevokedAt != null)
+            {
+                throw new AppException("Refresh token đã bị thu hồi.");
+            }
+
+            var user = await _quanLyRepo.AuthUser
+                .SingleOrDefaultAsync(x => x.UserID == refreshToken.UserId)
+                ?? throw new AppException("User không tồn tại.");
+
+            var newToken = GenerateTokens(user);
+
+            // TODO: Thực hiện revoke + insert trong cùng transaction
+
+            await using var transaction = await _QLContext.Database.BeginTransactionAsync();
+
+            await _tokenService.RevokedToken(refreshToken);
+
+            if (!await _tokenService.InsertToken(refreshToken.UserId, HashToken(newToken.RefreshToken)))
+            {
+                throw new AppException("Không thể lưu refresh token mới.");
+            }
+
+            return new ApiResponse
+            {
+                Success = true,
+                Message = "Refresh token thành công.",
+                Data = newToken
+            };
         }
     }
 }

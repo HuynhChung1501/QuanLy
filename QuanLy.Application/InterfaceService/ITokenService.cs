@@ -19,6 +19,6 @@ namespace QuanLy.Application.InterfaceService
         /// <param name="refreshToken"></param>
         /// <returns></returns>
         Task<bool> RevokedToken(RefreshToken refreshToken);
-        RefreshToken? GetRefreshTokenByToken(string hashToken);
+        Task<RefreshToken?> GetRefreshTokenByToken(string hashToken);
     }
 }

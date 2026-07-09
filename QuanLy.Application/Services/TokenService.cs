@@ -65,11 +65,11 @@ namespace QuanLy.Application.Services
             }
         }
 
-        public RefreshToken? GetRefreshTokenByToken(string hashToken)
+        public async Task<RefreshToken?> GetRefreshTokenByToken(string hashToken)
         {
             try
             {
-                var token = _QLContext.RefreshTokenRepository.FirstOrDefault(t => t.TokenHash == hashToken);
+                var token = await _QLContext.RefreshTokenRepository.FirstOrDefaultNoTrackingAsync(t => t.TokenHash == hashToken);
                 return token;
             }
             catch (Exception ex)

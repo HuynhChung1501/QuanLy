@@ -70,7 +70,7 @@ namespace QuanLyCongViec.Controllers
         [Route("RefreshToken")]
         public async Task<IActionResult> RefreshToken(RefreshTokenRequest RefreshToken)
         {
-            var response = await _loginService.RefreshToken(RefreshToken);
+            var response = await _loginService.RefreshAccessToken(RefreshToken);
             return Ok(response);
         }
     }
