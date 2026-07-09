@@ -78,18 +78,6 @@ namespace QuanLy.Infrastructure.Repositories
                 return _iAuth_RolesRepository;
             }
         }
-        private IAuth_UserRolesRepository _iuth_UserRolesRepository;
-        public IAuth_UserRolesRepository Auth_UserRolesRepository
-        {
-            get
-            {
-                if (_iuth_UserRolesRepository == null)
-                {
-                    _iuth_UserRolesRepository = new Auth_UserRolesRepository(_repoContext);
-                }
-                return _iuth_UserRolesRepository;
-            }
-        }
 
         private IAuth_UsersRepository _iAuth_UsersRepository;
         public IAuth_UsersRepository Auth_UsersRepository

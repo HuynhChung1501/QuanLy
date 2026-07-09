@@ -20,10 +20,10 @@ namespace QuanLy.Application.Services
         public async Task<Auth_PermissionsDTODetail> GetPermission(string permission)
         {
             var model = new Auth_PermissionsDTODetail();
-            var auth_Users = await _QLContext.Auth_PermissionsRepository.FirstOrDefaultAsync(x => x.Permission.Contains(permission));
-            if (auth_Users != null)
+            var Permission = await _QLContext.Auth_PermissionsRepository.FirstOrDefaultAsync(x => x.Permission.Contains(permission));
+            if (Permission != null)
             {
-                model = _mapper.Map<Auth_PermissionsDTODetail>(auth_Users);
+                model = _mapper.Map<Auth_PermissionsDTODetail>(Permission);
             }
             else throw new AppException("Không tìm thấy dữ liệu phù hợp.");
             return model;
@@ -36,9 +36,9 @@ namespace QuanLy.Application.Services
                 {
                     throw new AppException($"Permission: {model.Permission} đã tồn tại");
                 }
-                Auth_Permissions auth_Users = _mapper.Map<Auth_Permissions>(model);
+                Auth_Permissions Permission = _mapper.Map<Auth_Permissions>(model);
 
-                await _QLContext.Auth_PermissionsRepository.InsertAsync(auth_Users);
+                await _QLContext.Auth_PermissionsRepository.InsertAsync(Permission);
                 await _QLContext.Auth_PermissionsRepository.SaveChangesAsync();
 
                 return _mapper.Map<Auth_PermissionsDTO>(model);
@@ -72,16 +72,16 @@ namespace QuanLy.Application.Services
         {
             try
             {
-                var auth_Users = await _QLContext.Auth_PermissionsRepository.FirstOrDefaultAsync(x => x.Permission.Contains(model.Permission ?? ""));
+                var Permission = await _QLContext.Auth_PermissionsRepository.FirstOrDefaultAsync(x => x.Permission.Contains(model.Permission ?? ""));
 
-                if (auth_Users == null) throw new AppException("Không tìm thấy dữ liệu phù hợp");
+                if (Permission == null) throw new AppException("Không tìm thấy dữ liệu phù hợp");
 
-                auth_Users = _mapper.Map<Auth_Permissions>(auth_Users);
+                Permission = _mapper.Map<Auth_Permissions>(Permission);
 
-                await _QLContext.Auth_PermissionsRepository.UpdateAsync(auth_Users);
+                await _QLContext.Auth_PermissionsRepository.UpdateAsync(Permission);
                 await _QLContext.Auth_PermissionsRepository.SaveChangesAsync();
 
-                return _mapper.Map<Auth_PermissionsDTO>(auth_Users);
+                return _mapper.Map<Auth_PermissionsDTO>(Permission);
             }
             catch (Exception ex)
             {

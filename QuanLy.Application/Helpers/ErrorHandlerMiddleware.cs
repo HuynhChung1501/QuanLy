@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using QuanLy.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,13 @@ namespace QuanLy.Application.Helpers
                         break;
                 }
 
-                var result = JsonSerializer.Serialize(new { message = error?.Message });
+                var result = JsonSerializer.Serialize(new ApiResponse
+                {
+                    Success = false,
+                    StatusCode = response.StatusCode,
+                    Message = error?.Message
+                });
+
                 await response.WriteAsync(result);
             }
         }

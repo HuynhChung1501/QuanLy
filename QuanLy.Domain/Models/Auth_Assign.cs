@@ -17,5 +17,10 @@ namespace QuanLy.Domain.Models
         public required string Permission { get; set; }
         [Required]
         public required int ObjectID { get; set; }
+        /// <summary>
+        /// Type 1 = , 2 = Role
+        /// </summary>
+        [Required]
+        public int ObjectType { get; set; } = 1;
     }
 }

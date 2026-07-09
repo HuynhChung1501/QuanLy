@@ -22,7 +22,6 @@ namespace QuanLy.Infrastructure.Context
         public DbSet<Auth_Assign_role> Auth_Assign_roles { get; set; }
         public DbSet<Auth_Permissions> Auth_Permissions { get; set; }
         public DbSet<Auth_Roles> Auth_Roles { get; set; }
-        public DbSet<Auth_UserRoles> Auth_UserRoles { get; set; }
         public DbSet<RefreshToken> RefreshToken { get; set; }
         #endregion
     }

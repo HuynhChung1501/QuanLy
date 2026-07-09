@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using QuanLy.Application.DTO.Auth_Assign;
+using QuanLy.Application.Helpers;
 using QuanLy.Application.InterfaceService;
 using QuanLy.Domain.Interface;
 using QuanLy.Domain.Models;
@@ -31,6 +33,7 @@ namespace QuanLyCongViec.Controllers
             _context = context;
         }
 
+        [EnableRateLimiting(RateLimiterExtensions.Login)]
         [HttpPost]
         [Route("SignIn")]
         public async Task<IActionResult> SignIn(LoginModel model)

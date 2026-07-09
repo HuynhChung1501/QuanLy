@@ -6,16 +6,10 @@ using QuanLy.Application.Helpers;
 using QuanLy.Application.InterfaceService;
 using QuanLy.Domain.Interface;
 using QuanLy.Domain.Models;
-using QuanLy.Infrastructure.Context;
-using QuanLy.Infrastructure.Migrations;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLy.Application.Services
 {

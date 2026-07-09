@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using QuanLy.Application.DTO.Auth_Assign;
+using QuanLy.Application.Helpers;
 using QuanLy.Application.InterfaceService;
 using QuanLy.Domain.Interface;
 using QuanLy.Domain.Models;
 
 namespace QuanLyCongViec.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [EnableRateLimiting(RateLimiterExtensions.Api)]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -25,7 +27,6 @@ namespace QuanLyCongViec.Controllers
 
         
         [HttpPost]
-        [EnableRateLimiting("ApiPolicy")]
         [AllowAnonymous]
         [Route("GetList")]
         public async Task<IActionResult> GetList(Auth_UsersDTOParam searchParam)

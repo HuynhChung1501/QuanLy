@@ -12,8 +12,8 @@ using QuanLy.Infrastructure.Context;
 namespace QuanLy.Infrastructure.Migrations
 {
     [DbContext(typeof(DASContext))]
-    [Migration("20260706090817_RefreshToken")]
-    partial class RefreshToken
+    [Migration("20260709092457_createTable")]
+    partial class createTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace QuanLy.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("ObjectID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ObjectType")
                         .HasColumnType("integer");
 
                     b.HasKey("Permission");
@@ -99,22 +102,6 @@ namespace QuanLy.Infrastructure.Migrations
                     b.HasKey("RoleID");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("QuanLy.Domain.Models.Auth_UserRoles", b =>
-                {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserID"));
-
-                    b.Property<int>("RoleID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserID");
-
-                    b.ToTable("Auth_UserRoles");
                 });
 
             modelBuilder.Entity("QuanLy.Domain.Models.Auth_Users", b =>

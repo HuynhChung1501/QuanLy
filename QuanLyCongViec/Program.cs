@@ -59,20 +59,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
-builder.Services.AddRateLimiter(options =>
-{
-    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-
-    options.AddFixedWindowLimiter("ApiPolicy", opt =>
-    {
-        opt.PermitLimit = 100;                  // tối đa 100 request
-        opt.Window = TimeSpan.FromMinutes(1);   // trong 1 phút
-
-        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-        opt.QueueLimit = 0;
-    });
-});
-
+#region Rate Limit
+builder.Services.AddRateLimiterConfiguration();
+#endregion
 var app = builder.Build();
 
 // Middleware

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace QuanLy.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Auth_User : Migration
+    public partial class createTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,8 @@ namespace QuanLy.Infrastructure.Migrations
                 columns: table => new
                 {
                     Permission = table.Column<string>(type: "text", nullable: false),
-                    ObjectID = table.Column<int>(type: "integer", nullable: false)
+                    ObjectID = table.Column<int>(type: "integer", nullable: false),
+                    ObjectType = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,23 +51,10 @@ namespace QuanLy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Auth_UserRoles",
-                columns: table => new
-                {
-                    UserID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleID = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Auth_UserRoles", x => x.UserID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Auth_Users",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
+                    UserID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     UsereName = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
@@ -85,7 +73,27 @@ namespace QuanLy.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Auth_Users", x => x.ID);
+                    table.PrimaryKey("PK_Auth_Users", x => x.UserID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    TokenHash = table.Column<string>(type: "text", nullable: false),
+                    ExpireAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RevokedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreatedByIp = table.Column<string>(type: "text", nullable: true),
+                    RevokedByIp = table.Column<string>(type: "text", nullable: true),
+                    IsRevoked = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,10 +127,10 @@ namespace QuanLy.Infrastructure.Migrations
                 name: "Auth_Permissions");
 
             migrationBuilder.DropTable(
-                name: "Auth_UserRoles");
+                name: "Auth_Users");
 
             migrationBuilder.DropTable(
-                name: "Auth_Users");
+                name: "RefreshToken");
 
             migrationBuilder.DropTable(
                 name: "User");
