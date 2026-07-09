@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +9,7 @@ using QuanLy.Application.Helpers;
 using QuanLy.Application.InterfaceService;
 using QuanLy.Domain.Interface;
 using QuanLy.Domain.Models;
+using QuanLy.Infrastructure.Context;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -23,15 +25,17 @@ namespace QuanLy.Application.Services
         private readonly ITokenService _tokenService;
         private readonly IQuanLyRepositoryWrapper _quanLyRepo;
         private readonly ILogger<LoginService> _logger;
+        private readonly DASContext _context;
 
 
-        public LoginService(IQuanLyRepositoryWrapper quanLyRepo, IMapper mapper, ITokenService tokenService, ILogger<LoginService> logger, IQuanLyRepositoryWrapper IQuanLyRepositoryWrapper, IConfiguration configuration) : base(quanLyRepo)
+        public LoginService(IQuanLyRepositoryWrapper quanLyRepo, IMapper mapper, ITokenService tokenService, ILogger<LoginService> logger, IQuanLyRepositoryWrapper IQuanLyRepositoryWrapper, IConfiguration configuration, DASContext context) : base(quanLyRepo)
         {
             _mapper = mapper;
             _config = configuration;
             _tokenService = tokenService;
             _quanLyRepo = IQuanLyRepositoryWrapper;
             _logger = logger;
+            _context = context;
 
 
         }
@@ -118,8 +122,7 @@ namespace QuanLy.Application.Services
             var newToken = GenerateTokens(user);
 
             // TODO: Thực hiện revoke + insert trong cùng transaction
-
-            await using var transaction = await _QLContext.Database.BeginTransactionAsync();
+            await RotateRefreshTokenAsync(refreshToken, newToken.RefreshToken);
 
             await _tokenService.RevokedToken(refreshToken);
 
@@ -135,5 +138,27 @@ namespace QuanLy.Application.Services
                 Data = newToken
             };
         }
+        public async Task RotateRefreshTokenAsync(RefreshToken refreshToken, string newRefreshToken)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try { 
+                refreshToken.RevokedAt = DateTime.UtcNow; 
+                _context.RefreshToken.Update(refreshToken); 
+                _context.RefreshToken.Add(new RefreshToken { 
+                    UserId = refreshToken.UserId, 
+                    TokenHash = HashToken(newRefreshToken), 
+                    ExpireAt = DateTime.UtcNow.AddDays(7) 
+                }); 
+                await _context.SaveChangesAsync(); 
+                await transaction.CommitAsync(); 
+            } 
+            catch (Exception ex) { 
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, $"Cõ lỗi xảy ra: {ex.Message}");
+                throw; 
+            }
+        }
+
+
     }
 }

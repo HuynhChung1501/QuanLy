@@ -64,7 +64,6 @@ namespace QuanLy.Application.Services
                 return false;
             }
         }
-
         public async Task<RefreshToken?> GetRefreshTokenByToken(string hashToken)
         {
             try
