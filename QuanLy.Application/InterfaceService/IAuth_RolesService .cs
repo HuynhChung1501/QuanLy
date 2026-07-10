@@ -16,6 +16,6 @@ namespace QuanLy.Application.InterfaceService
         Task<Auth_RolesDTOIndex> Search(Auth_RolesDTOParam searchParam);
         Task<Auth_RolesDTO> Create(Auth_RolesDTOCreate account);
         Task<Auth_RolesDTO> Edit(Auth_RolesDTOUpdate account);
-        Task<string> Delete(int id);
+        Task<bool> Delete(int id);
     }
 }

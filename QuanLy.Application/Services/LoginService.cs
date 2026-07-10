@@ -124,13 +124,6 @@ namespace QuanLy.Application.Services
             // TODO: Thực hiện revoke + insert trong cùng transaction
             await RotateRefreshTokenAsync(refreshToken, newToken.RefreshToken);
 
-            await _tokenService.RevokedToken(refreshToken);
-
-            if (!await _tokenService.InsertToken(refreshToken.UserId, HashToken(newToken.RefreshToken)))
-            {
-                throw new AppException("Không thể lưu refresh token mới.");
-            }
-
             return new ApiResponse
             {
                 Success = true,

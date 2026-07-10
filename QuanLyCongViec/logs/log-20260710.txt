@@ -1,0 +1,265 @@
+[2026-07-10 09:14:09 INF] HTTP GET / responded 404 in 0.6419 ms (User:)
+[2026-07-10 09:15:16 INF] HTTP POST /api/Login/SignIn responded 200 in 6904.4436 ms (User:)
+[2026-07-10 09:18:48 INF] HTTP POST /api/Login/RefreshToken responded 200 in 170698.9204 ms (User:)
+[2026-07-10 09:20:06 INF] HTTP POST /api/Login/SignIn responded 200 in 621.9009 ms (User:)
+[2026-07-10 09:20:20 INF] HTTP POST /api/Login/RefreshToken responded 200 in 4411.1903 ms (User:)
+[2026-07-10 09:21:14 INF] HTTP GET / responded 404 in 1.3167 ms (User:)
+[2026-07-10 09:21:39 ERR] HTTP POST /api/Login/RefreshToken responded 500 in 4028.1209 ms (User:)
+QuanLy.Application.Helpers.AppException: Refresh token đã bị thu hồi.
+   at QuanLy.Application.Services.LoginService.RefreshAccessToken(RefreshTokenRequest request) in D:\Source\QL\QuanLy.Application\Services\LoginService.cs:line 115
+   at QuanLyCongViec.Controllers.LoginController.RefreshToken(RefreshTokenRequest RefreshToken) in D:\Source\QL\QuanLyCongViec\Controllers\LoginController.cs:line 73
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 09:21:48 INF] HTTP POST /api/Login/SignIn responded 200 in 902.9852 ms (User:)
+[2026-07-10 09:22:02 INF] HTTP POST /api/Login/RefreshToken responded 200 in 4659.7436 ms (User:)
+[2026-07-10 10:44:37 INF] HTTP POST /api/Permissions/Create responded 400 in 449.1063 ms (User:)
+[2026-07-10 10:44:49 ERR] HTTP POST /api/Permissions/Create responded 500 in 4025.9231 ms (User:)
+QuanLy.Application.Helpers.AppException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Auth_PermissionsDTOCreate -> Auth_Permissions
+QuanLy.Application.DTO.Auth_Assign.Auth_PermissionsDTOCreate -> QuanLy.Domain.Models.Auth_Permissions
+   at QuanLy.Application.Services.Auth_PermissionsService.Create(Auth_PermissionsDTOCreate model) in D:\Source\QL\QuanLy.Application\Services\Auth_PermissionsService.cs:line 49
+   at QuanLyCongViec.Controllers.PermissionsController.Create(Auth_PermissionsDTOCreate model) in D:\Source\QL\QuanLyCongViec\Controllers\PermissionsController.cs:line 70
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 10:48:13 ERR] HTTP POST /api/Permissions/Create responded 500 in 445.8393 ms (User:)
+QuanLy.Application.Helpers.AppException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Auth_PermissionsDTOCreate -> Auth_Permissions
+QuanLy.Application.DTO.Auth_Assign.Auth_PermissionsDTOCreate -> QuanLy.Domain.Models.Auth_Permissions
+   at QuanLy.Application.Services.Auth_PermissionsService.Create(Auth_PermissionsDTOCreate model)
+   at QuanLyCongViec.Controllers.PermissionsController.Create(Auth_PermissionsDTOCreate model) in D:\Source\QL\QuanLyCongViec\Controllers\PermissionsController.cs:line 70
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 10:48:44 INF] HTTP GET / responded 404 in 2.1336 ms (User:)
+[2026-07-10 10:49:18 ERR] HTTP POST /api/Permissions/Create responded 500 in 5980.7016 ms (User:)
+QuanLy.Application.Helpers.AppException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Auth_PermissionsDTOCreate -> Auth_Permissions
+QuanLy.Application.DTO.Auth_Assign.Auth_PermissionsDTOCreate -> QuanLy.Domain.Models.Auth_Permissions
+   at QuanLy.Application.Services.Auth_PermissionsService.Create(Auth_PermissionsDTOCreate model) in D:\Source\QL\QuanLy.Application\Services\Auth_PermissionsService.cs:line 49
+   at QuanLyCongViec.Controllers.PermissionsController.Create(Auth_PermissionsDTOCreate model) in D:\Source\QL\QuanLyCongViec\Controllers\PermissionsController.cs:line 70
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 10:49:46 ERR] HTTP POST /api/Permissions/Create responded 500 in 589.0918 ms (User:)
+QuanLy.Application.Helpers.AppException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Auth_PermissionsDTOCreate -> Auth_Permissions
+QuanLy.Application.DTO.Auth_Assign.Auth_PermissionsDTOCreate -> QuanLy.Domain.Models.Auth_Permissions
+   at QuanLy.Application.Services.Auth_PermissionsService.Create(Auth_PermissionsDTOCreate model)
+   at QuanLyCongViec.Controllers.PermissionsController.Create(Auth_PermissionsDTOCreate model) in D:\Source\QL\QuanLyCongViec\Controllers\PermissionsController.cs:line 70
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 10:51:55 INF] HTTP GET / responded 404 in 0.3348 ms (User:)
+[2026-07-10 10:52:37 INF] HTTP POST /api/Permissions/Create responded 200 in 4288.8335 ms (User:)
+[2026-07-10 10:53:12 INF] HTTP POST /api/Permissions/Create responded 200 in 643.6689 ms (User:)
+[2026-07-10 10:54:30 INF] HTTP POST /api/Permissions/GetList responded 400 in 93.1509 ms (User:)
+[2026-07-10 10:55:00 ERR] HTTP POST /api/Permissions/GetList responded 500 in 519.4249 ms (User:)
+QuanLy.Application.Helpers.AppException: Không tìm thấy dữ liệu phù hợp
+   at QuanLy.Application.Services.Auth_PermissionsService.Search(Auth_PermissionsDTOParam searchParam) in D:\Source\QL\QuanLy.Application\Services\Auth_PermissionsService.cs:line 117
+   at QuanLyCongViec.Controllers.PermissionsController.GetList(Auth_PermissionsDTOParam searchParam) in D:\Source\QL\QuanLyCongViec\Controllers\PermissionsController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 10:55:13 ERR] HTTP POST /api/Permissions/GetList responded 500 in 427.2915 ms (User:)
+QuanLy.Application.Helpers.AppException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Auth_Permissions -> Auth_PermissionsDTO
+QuanLy.Domain.Models.Auth_Permissions -> QuanLy.Application.DTO.Auth_Assign.Auth_PermissionsDTO
+   at QuanLy.Application.Services.Auth_PermissionsService.Search(Auth_PermissionsDTOParam searchParam) in D:\Source\QL\QuanLy.Application\Services\Auth_PermissionsService.cs:line 117
+   at QuanLyCongViec.Controllers.PermissionsController.GetList(Auth_PermissionsDTOParam searchParam) in D:\Source\QL\QuanLyCongViec\Controllers\PermissionsController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 10:58:26 INF] HTTP GET / responded 404 in 0.3792 ms (User:)
+[2026-07-10 10:59:08 INF] HTTP POST /api/Permissions/GetList responded 200 in 4069.7815 ms (User:)
+[2026-07-10 11:00:02 INF] HTTP POST /api/Permissions/GetList responded 200 in 377.7619 ms (User:)
+[2026-07-10 11:01:00 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0687 ms (User:)
+[2026-07-10 11:01:08 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0163 ms (User:)
+[2026-07-10 11:02:31 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0396 ms (User:)
+[2026-07-10 11:02:42 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0272 ms (User:)
+[2026-07-10 11:03:42 INF] HTTP GET / responded 404 in 0.4092 ms (User:)
+[2026-07-10 11:03:50 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.1184 ms (User:)
+[2026-07-10 11:04:18 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0456 ms (User:)
+[2026-07-10 11:04:31 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0160 ms (User:)
+[2026-07-10 11:06:09 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0319 ms (User:)
+[2026-07-10 11:06:24 INF] HTTP GET / responded 404 in 0.3814 ms (User:)
+[2026-07-10 11:06:38 INF] HTTP POST /api/Permission/GetPermission responded 404 in 0.0952 ms (User:)
+[2026-07-10 11:06:59 INF] HTTP POST /api/Permissions/GetPermission responded 200 in 9093.6897 ms (User:)
+[2026-07-10 11:09:12 ERR] HTTP POST /api/Permissions/SearchPagination responded 500 in 592.3063 ms (User:)
+QuanLy.Application.Helpers.AppException: Không tìm thấy dữ liệu phù hợp
+   at QuanLy.Application.Services.Auth_PermissionsService.Search(Auth_PermissionsDTOParam searchParam) in D:\Source\QL\QuanLy.Application\Services\Auth_PermissionsService.cs:line 115
+   at QuanLyCongViec.Controllers.PermissionsController.SearchPagination(Auth_PermissionsDTOParam searchParam) in D:\Source\QL\QuanLyCongViec\Controllers\PermissionsController.cs:line 43
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 11:09:50 INF] HTTP POST /api/Permissions/SearchPagination responded 200 in 288.3341 ms (User:)
+[2026-07-10 14:33:44 INF] HTTP GET / responded 404 in 0.3979 ms (User:)
+[2026-07-10 14:34:13 INF] HTTP POST /api/Role/GetList responded 404 in 2.6843 ms (User:)
+[2026-07-10 14:34:29 ERR] HTTP POST /api/Role/GetByName responded 500 in 708.2480 ms (User:)
+System.InvalidOperationException: Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method9(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 14:34:29 ERR] Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'. (User:)
+System.InvalidOperationException: Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method9(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.RateLimiting.RateLimitingMiddleware.InvokeInternal(HttpContext context, EnableRateLimitingAttribute enableRateLimitingAttribute)
+   at QuanLy.Application.Helpers.ErrorHandlerMiddleware.Invoke(HttpContext context) in D:\Source\QL\QuanLy.Application\Helpers\ErrorHandlerMiddleware.cs:line 29
+[2026-07-10 14:34:40 ERR] HTTP POST /api/Role/GetByName responded 500 in 45.7081 ms (User:)
+System.InvalidOperationException: Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method9(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 14:34:40 ERR] Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'. (User:)
+System.InvalidOperationException: Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method9(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.RateLimiting.RateLimitingMiddleware.InvokeInternal(HttpContext context, EnableRateLimitingAttribute enableRateLimitingAttribute)
+   at QuanLy.Application.Helpers.ErrorHandlerMiddleware.Invoke(HttpContext context) in D:\Source\QL\QuanLy.Application\Helpers\ErrorHandlerMiddleware.cs:line 29
+[2026-07-10 14:37:03 INF] HTTP GET / responded 404 in 0.7053 ms (User:)
+[2026-07-10 14:37:39 ERR] HTTP GET /api/Role/GetByName responded 500 in 602.4857 ms (User:)
+System.InvalidOperationException: Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method9(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-07-10 14:37:39 ERR] Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'. (User:)
+System.InvalidOperationException: Unable to resolve service for type 'QuanLy.Application.InterfaceService.IAuth_RolesService' while attempting to activate 'QuanLyCongViec.Controllers.RoleController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method9(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.RateLimiting.RateLimitingMiddleware.InvokeInternal(HttpContext context, EnableRateLimitingAttribute enableRateLimitingAttribute)
+   at QuanLy.Application.Helpers.ErrorHandlerMiddleware.Invoke(HttpContext context) in D:\Source\QL\QuanLy.Application\Helpers\ErrorHandlerMiddleware.cs:line 29
+[2026-07-10 14:39:24 INF] HTTP GET / responded 404 in 0.6182 ms (User:)
+[2026-07-10 14:44:57 INF] HTTP GET /api/Role/GetByName responded 400 in 702.0633 ms (User:)
+[2026-07-10 14:46:00 ERR] HTTP POST /api/Role/SearchPagination responded 500 in 4863.8679 ms (User:)
+QuanLy.Application.Helpers.AppException: Không tìm thấy dữ liệu phù hợp
+   at QuanLy.Application.Services.Auth_RolesService.Search(Auth_RolesDTOParam searchParam) in D:\Source\QL\QuanLy.Application\Services\Auth_RolesService .cs:line 129
+   at QuanLyCongViec.Controllers.RoleController.SearchPagination(Auth_RolesDTOParam searchParam) in D:\Source\QL\QuanLyCongViec\Controllers\RoleController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)

@@ -16,7 +16,7 @@ namespace QuanLy.Domain.Models
 
         public DateTime ExpireAt { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime? RevokedAt { get; set; }
 

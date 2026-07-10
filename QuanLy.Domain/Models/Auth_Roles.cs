@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuanLy.Domain.Models
 {
-    [Table("User")]
+    [Table("Auth_Roles")]
     public class Auth_Roles 
     {
         [Key]

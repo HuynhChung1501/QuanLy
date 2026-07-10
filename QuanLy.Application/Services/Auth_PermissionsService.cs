@@ -76,8 +76,6 @@ namespace QuanLy.Application.Services
 
                 if (Permission == null) throw new AppException("Không tìm thấy dữ liệu phù hợp");
 
-                Permission = _mapper.Map<Auth_Permissions>(Permission);
-
                 await _QLContext.Auth_PermissionsRepository.UpdateAsync(Permission);
                 await _QLContext.Auth_PermissionsRepository.SaveChangesAsync();
 

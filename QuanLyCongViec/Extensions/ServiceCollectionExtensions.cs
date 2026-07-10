@@ -19,6 +19,7 @@ namespace QuanLyCongViec.Extensions
             services.AddScoped<IAuth_UsersService, Auth_UsersService>();
             services.AddScoped<IAuth_PermissionsService, Auth_PermissionsService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAuth_RolesService, Auth_RolesService>();
 
             #endregion
 

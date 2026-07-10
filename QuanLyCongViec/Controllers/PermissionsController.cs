@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Application.Helpers;
@@ -24,16 +23,15 @@ namespace QuanLyCongViec.Controllers
 
         
         [HttpPost]
-        [AllowAnonymous]
-        [Route("GetList")]
-        public async Task<IActionResult> GetList(Auth_PermissionsDTOParam searchParam)
+        [Route("GetPermission")]
+        public async Task<IActionResult> GetPermission(Auth_PermissionsDTOParam searchParam)
         {
-            var user = await _iAuth_PermissionsService.Search(searchParam);
+            var result = await _iAuth_PermissionsService.Search(searchParam);
 
             return Ok(new ApiResponse
             {
                 Message = "Lấy danh sách thành công!",
-                Data = user
+                Data = result
             });
         }
 

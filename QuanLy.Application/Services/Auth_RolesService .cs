@@ -62,7 +62,7 @@ namespace QuanLy.Application.Services
             }
         }
 
-        public async Task<string> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {
