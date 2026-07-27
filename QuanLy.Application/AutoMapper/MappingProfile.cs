@@ -27,6 +27,11 @@ namespace QuanLy.Application.AutoMapper
             CreateMap<Auth_Roles, Auth_RolesDTOCreate>();
             CreateMap<Auth_Roles, Auth_RolesDTO>();
             CreateMap<Auth_Roles, Auth_RolesDTODetail>();
+
+            CreateMap<Auth_RolesDTODetail, Auth_Roles>();
+            CreateMap<Auth_RolesDTO, Auth_Roles>();
+            CreateMap<Auth_RolesDTOCreate, Auth_Roles>();
+
             #endregion
         }
     }

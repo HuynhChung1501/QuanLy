@@ -39,6 +39,19 @@ namespace QuanLyCongViec.Controllers
         }
 
         [HttpPost]
+        [Route("GetList")]
+        public async Task<IActionResult> GetList(Auth_RolesDTOParam param)
+        {
+            var result = await _auth_RolesService.Search(param);
+
+            return Ok(new ApiResponse
+            {
+                Message = "Lấy data thành công!",
+                Data = result
+            });
+        }
+
+        [HttpPost]
         [Route("SearchPagination")]
         public async Task<IActionResult> SearchPagination(Auth_RolesDTOParam searchParam)
         {

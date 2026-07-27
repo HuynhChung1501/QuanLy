@@ -32,7 +32,9 @@ namespace QuanLy.Application.Services
         public async Task<Auth_RolesDTODetail> GetByName(string name)
         {
             var model = new Auth_RolesDTODetail();
-            var authRole = await _QLContext.Auth_RolesRepository.FirstOrDefaultAsync(x => x.Name.Contains(name) && x.IsShow == (byte)EnumCommon.Status.Active);
+            var authRole = await _QLContext.Auth_RolesRepository.FirstOrDefaultAsync(x => x.Name.Contains(name) 
+                            && x.IsShow == (byte)EnumCommon.Status.Active 
+                            && x.Status == (int)EnumCommon.Status.Active);
             if (authRole != null)
             {
                 model = _mapper.Map<Auth_RolesDTODetail>(authRole);

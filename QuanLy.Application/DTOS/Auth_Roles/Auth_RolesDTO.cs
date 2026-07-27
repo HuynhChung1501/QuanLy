@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuanLy.Application.DTO.Auth_Assign
 {
-    public class Auth_RolesDTO : BaseModel
+    public class Auth_RolesDTO 
     {
         public int RoleID { get; set; }
         public string? Name { get; set; }

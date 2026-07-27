@@ -18,9 +18,9 @@ namespace QuanLy.Domain.Models
         [Required]
         public required int ObjectID { get; set; }
         /// <summary>
-        /// Type 1 = , 2 = Role
+        /// Type 0: User, 1:role
         /// </summary>
         [Required]
-        public int ObjectType { get; set; } = 1;
+        public int ObjectType { get; set; } = 0; // 0: User, 1:role
     }
 }
