@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using QuanLy.Application.DTO.Auth_Assign;
 using QuanLy.Domain.Models;
+using QuanLy.Application.DTO.Projects;
+using QuanLy.Application.DTO.Sprints;
+using QuanLy.Application.DTO.ProjectTasks;
 namespace QuanLy.Application.AutoMapper
 {
     public class MappingProfile : Profile
@@ -33,6 +36,18 @@ namespace QuanLy.Application.AutoMapper
             CreateMap<Auth_RolesDTOCreate, Auth_Roles>();
 
             #endregion
+
+            CreateMap<Project, ProjectDTO>();
+            CreateMap<ProjectDTOCreate, Project>();
+            CreateMap<ProjectDTOUpdate, Project>();
+
+            CreateMap<Sprint, SprintDTO>();
+            CreateMap<SprintDTOCreate, Sprint>();
+            CreateMap<SprintDTOUpdate, Sprint>();
+
+            CreateMap<ProjectTask, ProjectTaskDTO>();
+            CreateMap<ProjectTaskDTOCreate, ProjectTask>();
+            CreateMap<ProjectTaskDTOUpdate, ProjectTask>();
         }
     }
 }

@@ -15,5 +15,8 @@ namespace QuanLy.Domain.Interface
         IAuth_RolesRepository Auth_RolesRepository { get; }
         IAuth_UsersRepository Auth_UsersRepository { get; }
         IRefreshTokenRepository RefreshTokenRepository { get; }
+        IProjectRepository ProjectRepository { get; }
+        ISprintRepository SprintRepository { get; }
+        IProjectTaskRepository ProjectTaskRepository { get; }
     }
 }

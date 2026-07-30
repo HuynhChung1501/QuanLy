@@ -105,6 +105,15 @@ namespace QuanLy.Infrastructure.Repositories
             }
         }
 
+        private IProjectRepository _projectRepository;
+        public IProjectRepository ProjectRepository => _projectRepository ??= new ProjectRepository(_repoContext);
+
+        private ISprintRepository _sprintRepository;
+        public ISprintRepository SprintRepository => _sprintRepository ??= new SprintRepository(_repoContext);
+
+        private IProjectTaskRepository _projectTaskRepository;
+        public IProjectTaskRepository ProjectTaskRepository => _projectTaskRepository ??= new ProjectTaskRepository(_repoContext);
+
 
     }
 }

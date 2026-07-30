@@ -83,7 +83,7 @@ namespace QuanLyCongViec.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("AssignUserRole")]
-        public async Task<IActionResult> Create(Auth_AssignDTOCreate model)
+        public async Task<IActionResult> AssignUserRole(Auth_AssignDTOCreate model)
         {
             var result = await _auth_AssignService.Create(model);
 
